@@ -29,7 +29,7 @@
 		}
 
 		// check validity of email
-		if(!filter_var($entered_email, FILTER_VALIDATE_EMAIL)) {
+		if (!filter_var($entered_email, FILTER_VALIDATE_EMAIL)) {
 			$validation_error = TRUE;
 			$validation_error_text = 'Keine gültige eMail-Adresse eingegeben !';		
 		}
@@ -136,7 +136,7 @@
 								type="text" 
 								name="e" 
 								id="newuseremail" 
-								value="<?php echo htmlentities($entered_email) ?>"
+								value="<?php echo htmlentities($user_email) ?>"
 								style="width: 255px; padding-left: 36px"
 								placeholder="eMail"
 						    autocomplete="on" 
@@ -186,7 +186,7 @@
 						<div class="g-recaptcha" data-sitekey="6Ld6ogQTAAAAADzkW1e_w-ymWcoPnn_PF1mzYGSi"></div>
 						
 						<!-- Submit button -->
-						<p><input style="width: 304px; margin-top: 20px" type="submit" value="Benutzer registrieren"></p>
+						<p><input style="width: 304px; margin-top: 20px" type="submit" name="submitted" value="Benutzer registrieren"></p>
 
 						<!-- error handling -->
 						<?php
