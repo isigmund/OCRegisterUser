@@ -1,9 +1,13 @@
 <?php
 
   // global vars
-	$validation_error = false;
-	$validation_error_text = "";
+	$validation_error = FALSE;
+	$validation_error_text = "default error";
 	$test = 'testvariable';
+	$user_id = "";
+	$user_email = "";
+	$user_real = "";
+	$user_pass = "";
 
 	if(!empty($_POST['submitted']))
 	{// if submitted do validations
@@ -19,13 +23,13 @@
 
 		// check validity of real name
 		if (!preg("/^[a-zA-Z ]*$/", $user_real)) {
-			$validation_error = true;
+			$validation_error = TRUE;
 			$validation_error_text = 'Kein gültiger Vor- und Nachname eingegeben !';
 		}
 
 		// check validity of email
 		if(!filter_var($user_email, FILTER_VALIDATE_EMAIL)) {
-			$validation_error = true;
+			$validation_error = TRUE;
 			$validation_error_text = 'Keine gültige eMail-Adresse eingegeben !';		
 		}
 
@@ -189,12 +193,10 @@
 
 						<!-- error handling -->
 						<?php
-						  $localvar = "localvar";
-						  echo htmlentities($localvar);
 						  echo htmlentities($validation_error_text);
 						  echo htmlentities($validation_error);
 
-							if ($validation_error) {
+							if (!empty($validation_error_text) {
 								echo '<ul><li class="error">';
 								echo $validation_error_text; 
 							
