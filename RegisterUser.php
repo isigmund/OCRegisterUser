@@ -196,7 +196,7 @@
 						  echo htmlentities($validation_error_text);
 						  echo htmlentities($validation_error);
 
-							if (!empty($validation_error_text) {
+							if (!empty($validation_error_text)) {
 								echo '<ul><li class="error">';
 								echo $validation_error_text; 
 							
