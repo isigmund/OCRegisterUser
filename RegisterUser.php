@@ -2,7 +2,6 @@
 
   // global vars
 	$validation_error = FALSE;
-	$validation_error_text = "default error";
 	$validation_error_texts = array();
 	$user_id = "";
 	$user_email = "";
@@ -23,22 +22,70 @@
 		if (!preg_match("/^[a-zA-Z ]*$/", $user_real)) {
 			$validation_error = TRUE;
 			array_push($validation_error_texts, 'Kein gültiger Vor- und Nachname eingegeben !');
-			$validation_error_text = 'Kein gültiger Vor- und Nachname eingegeben !';
 		}
 
 		// check validity of email
 		if (!filter_var($user_email, FILTER_VALIDATE_EMAIL)) {
 			$validation_error = TRUE;
-			array_push($validation_error_texts, 'Keine gültige eMail-Adresse eingegeben !');
-			$validation_error_text = 'Keine gültige eMail-Adresse eingegeben !';		
+			array_push($validation_error_texts, 'Keine gültige eMail-Adresse eingegeben !');	
 		}
 
 
 		// check valid reCAPTCHA response
 
-		//
 
-}
+		//Hash the user's password
+		//require "pswd.php";
+		$user_hash = password_hash($user_pass, PASSWORD_BCRYPT);
+
+		//We are now ready to create the account - import config.php
+		require "config.php";    //Set database credentials in config.php
+
+		
+		//Establish connection with your mySQL server
+		$conn = mysqli_connect($servername, $username, $password, $dbname);
+		if (!$conn and !$validation_error) {
+			$validation_error = TRUE;
+			array_push($validation_error_texts, 'Datenbankverbindung fehlgeschlagen !');
+		}
+
+		//Check for duplicates for records that must be unique. If found, abord.
+		//Check username
+		$numrows = mysqli_num_rows(mysqli_query($conn, "SELECT uid from ".$prefix."users WHERE uid = '$user_id'"));				
+		if ( $numrows > 0 and !$validation_error ) {
+			$validation_error = TRUE;
+			array_push($validation_error_texts, 'Benutzername existiert bereits !');
+		} 
+
+		//Check Email
+    $numrows = mysqli_num_rows(mysqli_query($conn, "SELECT configvalue from ".$prefix."preferences WHERE configvalue = '$user_email'"));
+		if ( $numrows > 0 and !$validation_error ) {
+			$validation_error = TRUE;
+			array_push($validation_error_texts, 'eMail bereits registriert !');
+		} 
+
+
+		// all checks successful continue creating the account
+		if (!$validation_error){
+			// create user account
+			$sql = "INSERT INTO `$dbname`.`".$prefix."users` (`uid`, `displayname`, `password`) VALUES ('$user_id', '$user_real', '$user_hash');"; //Create Usable Account
+			mysqli_query($conn, $sql);
+			$sql = "INSERT INTO `$dbname`.`".$prefix."preferences` (`userid`, `appid`, `configkey`, `configvalue`) VALUES ('$user_id', 'settings', 'email', '$user_email');"; //Associate Email with Acccount
+			mysqli_query($conn, $sql);
+
+			//Delete the next 2 lines if you want the account to be instantly activated.
+			$sql = "INSERT INTO `$dbname`.`".$prefix."preferences` (`userid`, `appid`, `configkey`, `configvalue`) VALUES ('$user_id', 'files', 'quota', '0 B');"; //Set quota to 0 B in order to disable account
+			mysqli_query($conn, $sql);
+
+			//Account registered
+			//Dispatch 2 email, 1 to activate user's account to the registree's account and another to the admin's with some of their data and the option to terminate the account.
+			//The following may need a LOT of modifying.
+			mail("$yourEmail","New User", "<h2>A new user has registered</h2><ul><li>Name: $user_real</li><li>Email: $user_email</li><li>Username: $user_id</li></ul><a href='$pathToTerminate?user=$user_id'>Terminate User?</a>",$headers);
+			mail("$user_email", "Welcome to our Cloud" ,"$emailHTML",$headers);
+			
+			//Emails sent, process complete.
+		}
+	}
 ?>
 
 <!DOCTYPE html>
@@ -204,8 +251,6 @@
 							
 					</fieldset>
 				</form>
-				
-				end of form
 
 				<div class="push"></div><!-- for sticky footer -->
 			</div>

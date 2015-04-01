@@ -58,26 +58,6 @@ echo "Checking records for duplicates...<br/>";
 //Check username
 echo "Checking User ID (username)...<br/>";
 if (mysqli_num_rows(mysqli_query($conn, "SELECT uid from ".$prefix."users WHERE uid = '$user_id'")) > 0) {
-	
-	
-
-	$array = array("err"=>'somedata');
-
-//create a url variable that will store all values
-//since you are going to send them as part of a single url 
-$par="";
-
-//if you are posting more than one value you will need to loop
-//through each one - not necessary if you are sending a single value
-
-foreach($array as $key=>$value){
-
-    $par .=$key."=".urlencode($value)."&";
-}
-
-header("RegisterUser.php?$par");
-	
-	
     //echo "User id already exists. Halted.";
     die();
 } else {
