@@ -23,13 +23,13 @@
 		$user_pass = mysql_escape_mimic($_POST['p']);
 
 		// check validity of real name
-		if (!preg("/^[a-zA-Z ]*$/", $user_real)) {
+		if (!preg("/^[a-zA-Z ]*$/", $entered_real)) {
 			$validation_error = TRUE;
 			$validation_error_text = 'Kein gültiger Vor- und Nachname eingegeben !';
 		}
 
 		// check validity of email
-		if(!filter_var($user_email, FILTER_VALIDATE_EMAIL)) {
+		if(!filter_var($entered_email, FILTER_VALIDATE_EMAIL)) {
 			$validation_error = TRUE;
 			$validation_error_text = 'Keine gültige eMail-Adresse eingegeben !';		
 		}
@@ -187,10 +187,6 @@
 						
 						<!-- Submit button -->
 						<p><input style="width: 304px; margin-top: 20px" type="submit" value="Benutzer registrieren"></p>
-
-						static text
-						<?php echo " ststic php text "; ?>
-						<?php echo htmlentities($test) ?>
 
 						<!-- error handling -->
 						<?php
