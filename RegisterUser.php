@@ -3,17 +3,14 @@
   // global vars
 	$validation_error = FALSE;
 	$validation_error_text = "default error";
-	$entered_id = "";
-	$entered_email = "";
-	$entered_real = "";
+	$validation_error_texts = array();
+	$user_id = "";
+	$user_email = "";
+	$user_real = "";
+	$user_pass = "";
 
 	if(!empty($_POST['submitted']))
 	{// if submitted do validations
-
-
-		$entered_real = ($_POST['r']);
-		$entered_email = ($_POST['e']);
-		$entered_id = ($_POST['u']);
 
 		require "functions.php";
 		//Set user's data while escaping to avoid SQL Injection
@@ -23,14 +20,16 @@
 		$user_pass = mysql_escape_mimic($_POST['p']);
 
 		// check validity of real name
-		if (!preg_match("/^[a-zA-Z ]*$/", $entered_real)) {
+		if (!preg_match("/^[a-zA-Z ]*$/", $user_real)) {
 			$validation_error = TRUE;
+			array_push($validation_error_texts, 'Kein gültiger Vor- und Nachname eingegeben !');
 			$validation_error_text = 'Kein gültiger Vor- und Nachname eingegeben !';
 		}
 
 		// check validity of email
-		if (!filter_var($entered_email, FILTER_VALIDATE_EMAIL)) {
+		if (!filter_var($user_email, FILTER_VALIDATE_EMAIL)) {
 			$validation_error = TRUE;
+			array_push($validation_error_texts, 'Keine gültige eMail-Adresse eingegeben !');
 			$validation_error_text = 'Keine gültige eMail-Adresse eingegeben !';		
 		}
 
@@ -121,7 +120,7 @@
 								id="newuserfullname"
 							    style="width: 255px; padding-left: 36px"
 								placeholder="Vor- und Nachname"
-								value="<?php echo htmlentities($entered_real) ?>"
+								value="<?php echo htmlentities($user_real) ?>"
 								autofocus
 								autocomplete="on" 
 								autocapitalize="off" 
@@ -153,7 +152,7 @@
 								type="text" 
 								name="u" 
 								id="newusername" 
-								value="<?php echo htmlentities($entered_id) ?>"
+								value="<?php echo htmlentities($user_id) ?>"
 								style="width: 255px; padding-left: 36px"
 								placeholder="Benutzername"
 						    autocomplete="on" 
@@ -190,18 +189,15 @@
 
 						<!-- error handling -->
 						<?php
-						  echo htmlentities($validation_error_text);
-						  echo htmlentities($validation_error);
-
-							if (!empty($validation_error_text)) {
+							if ($validation_error)) {
 								echo '<ul><li class="error">';
-								echo $validation_error_text; 
+								foreach($validation_error_text as $error_text)
+  								echo $error_text,"<br/>";
+								//echo $validation_error_text; 
 							
-
 						        //<br></br>
 						        //<p class="hint">Das ausgewählte Dokument wurde auf dem Server nich…</p>
 						        //<p class="hint"><a href="/index.php">Du kannst zur Rückkehr zu OwndCloud hier klicken.</a></p>
-
 						    echo '</li></ul>';
 						  }    
 						?>
