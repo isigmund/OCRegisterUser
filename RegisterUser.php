@@ -1,3 +1,18 @@
+<?php
+
+if(!empty($_POST['submitted']))
+{// if submitted do validations
+
+	$name = trim($_POST['r']);
+
+	if(empty($name))
+	{
+		$name_error="no name given";
+	}
+
+}
+?>
+
 <!DOCTYPE html>
 <!--[if lt IE 7]><html class="ng-csp ie ie6 lte9 lte8 lte7" data-placeholder-focus="false" lang="de"><![endif]-->
 <!--[if IE 7]><html class="ng-csp ie ie7 lte9 lte8 lte7" data-placeholder-focus="false" lang="de" ><![endif]-->
@@ -64,7 +79,7 @@
 								
 <!--[if IE 8]><style>input[type="checkbox"]{padding:0;}</style><![endif]-->
 <!-- registration.php -->
-<form method="post" action="dump_form_data.php" name="login">
+<form method="post" action="?" name="login">
 	<fieldset>
 		<p id="message" class="hidden">
 			<img class="float-spinner" alt=""
@@ -127,7 +142,7 @@ if (isset($_POST['err'])){
 ?>
 	
 <ul>
-    <li class="error">Datei nicht gefunden
+    <li class="error"><?php echo($name_error); ?>
         <br></br>
         <p class="hint">Das ausgewählte Dokument wurde auf dem Server nich…
         </p>
