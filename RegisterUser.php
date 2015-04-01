@@ -3,16 +3,17 @@
   // global vars
 	$validation_error = FALSE;
 	$validation_error_text = "default error";
-	$test = 'testvariable';
-	$user_id = "";
-	$user_email = "";
-	$user_real = "";
-	$user_pass = "";
+	$entered_id = "";
+	$entered_email = "";
+	$entered_real = "";
 
 	if(!empty($_POST['submitted']))
 	{// if submitted do validations
 
 
+		$entered_real = ($_POST['p']);
+		$entered_email = ($_POST['e']);
+		$entered_id = ($_POST['u']);
 
 		require "functions.php";
 		//Set user's data while escaping to avoid SQL Injection
@@ -120,7 +121,7 @@
 								id="newuserfullname"
 							    style="width: 255px; padding-left: 36px"
 								placeholder="Vor- und Nachname"
-								value="<?php echo htmlentities($user_real) ?>"
+								value="<?php echo htmlentities($entered_real) ?>"
 								autofocus
 								autocomplete="on" 
 								autocapitalize="off" 
@@ -135,7 +136,7 @@
 								type="text" 
 								name="e" 
 								id="newuseremail" 
-								value="<?php echo htmlentities($user_email) ?>"
+								value="<?php echo htmlentities($entered_email) ?>"
 								style="width: 255px; padding-left: 36px"
 								placeholder="eMail"
 						    autocomplete="on" 
@@ -152,7 +153,7 @@
 								type="text" 
 								name="u" 
 								id="newusername" 
-								value="<?php echo htmlentities($user_id) ?>"
+								value="<?php echo htmlentities($entered_id) ?>"
 								style="width: 255px; padding-left: 36px"
 								placeholder="Benutzername"
 						    autocomplete="on" 
