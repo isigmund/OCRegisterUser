@@ -189,7 +189,7 @@
 
 						<!-- error handling -->
 						<?php
-							if ($validation_error)) {
+							if ($validation_error) {
 								echo '<ul><li class="error">';
 								foreach($validation_error_text as $error_text)
   								echo $error_text,"<br/>";
