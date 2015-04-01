@@ -185,6 +185,8 @@ if(!empty($_POST['submitted']))
 
 						<!-- error handling -->
 						<?php
+						  $localvar = "localvar";
+						  echo htmlentities($localvar);
 						  echo htmlentities($validation_error_text);
 						  echo htmlentities($validation_error);
 
