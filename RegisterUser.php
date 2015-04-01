@@ -63,7 +63,8 @@
 					</header>
 								
 <!--[if IE 8]><style>input[type="checkbox"]{padding:0;}</style><![endif]-->
-<form method="post" action="registration.php" name="login">
+<!-- registration.php -->
+<form method="post" action="dump_form_data.php" name="login">
 	<fieldset>
 		<p id="message" class="hidden">
 			<img class="float-spinner" alt=""
@@ -117,7 +118,7 @@
 		  <input style="width: 304px; margin-top: 20px" type="submit" value="Benutzer registrieren">
         </p>
 
-<?	
+<?php
 echo 'PHP';
 if (isset($_POST['err'])){
   $errorcode = $_POST['err'];
