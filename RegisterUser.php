@@ -23,7 +23,7 @@
 		$user_pass = mysql_escape_mimic($_POST['p']);
 
 		// check validity of real name
-		if (!preg_match(pattern, subject)("/^[a-zA-Z ]*$/", $entered_real)) {
+		if (!preg_match("/^[a-zA-Z ]*$/", $entered_real)) {
 			$validation_error = TRUE;
 			$validation_error_text = 'Kein gültiger Vor- und Nachname eingegeben !';
 		}
