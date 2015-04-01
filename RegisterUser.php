@@ -1,34 +1,38 @@
 <?php
 
-if(!empty($_POST['submitted']))
-{// if submitted do validations
-
+  // global vars
 	$validation_error = false;
+	$validation_error_text = "";
 	$test = 'testvariable';
 
-	require "functions.php";
-	//Set user's data while escaping to avoid SQL Injection
-	$user_id = mysql_escape_mimic($_POST['u']);
-	$user_email = mysql_escape_mimic($_POST['e']);
-	$user_real = mysql_escape_mimic($_POST['r']);
-	$user_pass = mysql_escape_mimic($_POST['p']);
-
-	// check validity of real name
-	if (!preg("/^[a-zA-Z ]*$/", $user_real)) {
-		$validation_error = true;
-		$validation_error_text = 'Kein gültiger Vor- und Nachname eingegeben !';
-	}
-
-	// check validity of email
-	if(!filter_var($user_email, FILTER_VALIDATE_EMAIL)) {
-		$validation_error = true;
-		$validation_error_text = 'Keine gültige eMail-Adresse eingegeben !';		
-	}
+	if(!empty($_POST['submitted']))
+	{// if submitted do validations
 
 
-	// check valid reCAPTCHA response
 
-	//
+		require "functions.php";
+		//Set user's data while escaping to avoid SQL Injection
+		$user_id = mysql_escape_mimic($_POST['u']);
+		$user_email = mysql_escape_mimic($_POST['e']);
+		$user_real = mysql_escape_mimic($_POST['r']);
+		$user_pass = mysql_escape_mimic($_POST['p']);
+
+		// check validity of real name
+		if (!preg("/^[a-zA-Z ]*$/", $user_real)) {
+			$validation_error = true;
+			$validation_error_text = 'Kein gültiger Vor- und Nachname eingegeben !';
+		}
+
+		// check validity of email
+		if(!filter_var($user_email, FILTER_VALIDATE_EMAIL)) {
+			$validation_error = true;
+			$validation_error_text = 'Keine gültige eMail-Adresse eingegeben !';		
+		}
+
+
+		// check valid reCAPTCHA response
+
+		//
 
 }
 ?>
