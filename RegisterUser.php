@@ -3,14 +3,8 @@
 if(!empty($_POST['submitted']))
 {// if submitted do validations
 
-	$name = trim($_POST['r']);
-
-	if(empty($name))
-	{
-		$name_error="no name given";
-	}
-
 	$validation_error = false;
+	$test = "test";
 
 	require "functions.php";
 	//Set user's data while escaping to avoid SQL Injection
@@ -185,11 +179,15 @@ if(!empty($_POST['submitted']))
 						<!-- Submit button -->
 						<p><input style="width: 304px; margin-top: 20px" type="submit" value="Benutzer registrieren"></p>
 
+						static text
+						<?php echo "ststic php text"; ?>
+						<?php echo $test; ?>
+
 						<!-- error handling -->
 						<?php
 						  echo $validation_error_text;
 						  echo $validation_error;
-						  
+
 							if ($validation_error) {
 								echo "<ul><li class='error'>";
 								echo $validation_error_text; 
@@ -205,6 +203,9 @@ if(!empty($_POST['submitted']))
 							
 					</fieldset>
 				</form>
+				
+				end of form
+
 				<div class="push"></div><!-- for sticky footer -->
 			</div>
 		</div>
