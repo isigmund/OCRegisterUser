@@ -112,7 +112,7 @@ if(!empty($_POST['submitted']))
 								id="newuserfullname"
 							    style="width: 255px; padding-left: 36px"
 								placeholder="Vor- und Nachname"
-								value="<?php echo $user_real; ?>"
+								value="<?php echo htmlentities($user_real) ?>"
 								autofocus
 								autocomplete="on" 
 								autocapitalize="off" 
@@ -127,7 +127,7 @@ if(!empty($_POST['submitted']))
 								type="text" 
 								name="e" 
 								id="newuseremail" 
-								value="<?php echo $user_email; ?>"
+								value="<?php echo htmlentities($user_email) ?>"
 								style="width: 255px; padding-left: 36px"
 								placeholder="eMail"
 						    autocomplete="on" 
@@ -144,7 +144,7 @@ if(!empty($_POST['submitted']))
 								type="text" 
 								name="u" 
 								id="newusername" 
-								value="<?php echo $user_id; ?>"
+								value="<?php echo htmlentities($user_id) ?>"
 								style="width: 255px; padding-left: 36px"
 								placeholder="Benutzername"
 						    autocomplete="on" 
@@ -181,12 +181,12 @@ if(!empty($_POST['submitted']))
 
 						static text
 						<?php echo " ststic php text "; ?>
-						<?php echo $test; ?>
+						<?php echo htmlentities($test) ?>
 
 						<!-- error handling -->
 						<?php
-						  echo $validation_error_text;
-						  echo $validation_error;
+						  echo htmlentities($validation_error_text);
+						  echo htmlentities($validation_error);
 
 							if ($validation_error) {
 								echo '<ul><li class="error">';
@@ -197,8 +197,8 @@ if(!empty($_POST['submitted']))
 						        //<p class="hint">Das ausgewählte Dokument wurde auf dem Server nich…</p>
 						        //<p class="hint"><a href="/index.php">Du kannst zur Rückkehr zu OwndCloud hier klicken.</a></p>
 
-						        echo '</li></ul>';
-						    }    
+						    echo '</li></ul>';
+						  }    
 						?>
 							
 					</fieldset>
