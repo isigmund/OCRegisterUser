@@ -4,7 +4,7 @@ if(!empty($_POST['submitted']))
 {// if submitted do validations
 
 	$validation_error = false;
-	$test = "test";
+	$test = 'testvariable';
 
 	require "functions.php";
 	//Set user's data while escaping to avoid SQL Injection
@@ -16,13 +16,13 @@ if(!empty($_POST['submitted']))
 	// check validity of real name
 	if (!preg("/^[a-zA-Z ]*$/", $user_real)) {
 		$validation_error = true;
-		$validation_error_text = "Kein gültiger Vor- und Nachname eingegeben !";
+		$validation_error_text = 'Kein gültiger Vor- und Nachname eingegeben !';
 	}
 
 	// check validity of email
 	if(!filter_var($user_email, FILTER_VALIDATE_EMAIL)) {
 		$validation_error = true;
-		$validation_error_text = "Keine gültige eMail-Adresse eingegeben !";		
+		$validation_error_text = 'Keine gültige eMail-Adresse eingegeben !';		
 	}
 
 
@@ -180,7 +180,7 @@ if(!empty($_POST['submitted']))
 						<p><input style="width: 304px; margin-top: 20px" type="submit" value="Benutzer registrieren"></p>
 
 						static text
-						<?php echo "ststic php text"; ?>
+						<?php echo " ststic php text "; ?>
 						<?php echo $test; ?>
 
 						<!-- error handling -->
@@ -189,7 +189,7 @@ if(!empty($_POST['submitted']))
 						  echo $validation_error;
 
 							if ($validation_error) {
-								echo "<ul><li class='error'>";
+								echo '<ul><li class="error">';
 								echo $validation_error_text; 
 							
 
@@ -197,7 +197,7 @@ if(!empty($_POST['submitted']))
 						        //<p class="hint">Das ausgewählte Dokument wurde auf dem Server nich…</p>
 						        //<p class="hint"><a href="/index.php">Du kannst zur Rückkehr zu OwndCloud hier klicken.</a></p>
 
-						        echo "</li></ul>";
+						        echo '</li></ul>';
 						    }    
 						?>
 							
