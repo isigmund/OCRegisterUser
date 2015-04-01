@@ -136,11 +136,11 @@ if(!empty($_POST['submitted']))
 								value="<?php echo $user_email; ?>"
 								style="width: 255px; padding-left: 36px"
 								placeholder="eMail"
-						        autocomplete="on" 
-						        autocapitalize="off" 
-						        autocorrect="off" 
-						        required 
-						     />
+						    autocomplete="on" 
+						    autocapitalize="off" 
+						    autocorrect="off" 
+						    required 
+						   />
 							<label for="newuseremail" class="infield">eMail</label>
 						</p>
 						
@@ -153,10 +153,11 @@ if(!empty($_POST['submitted']))
 								value="<?php echo $user_id; ?>"
 								style="width: 255px; padding-left: 36px"
 								placeholder="Benutzername"
-						        autocomplete="on" 
-						        autocapitalize="off" 
-						        autocorrect="off" 
-						        required />
+						    autocomplete="on" 
+						    autocapitalize="off" 
+						    autocorrect="off" 
+						    required 
+						  />
 							<label for="newusername" class="infield">Benutzername</label>
 							<img class="svg" style="top: 22px;" id="password-icon" src="/core/img/actions/user.svg" alt=""/> 
 						</p>
@@ -169,10 +170,11 @@ if(!empty($_POST['submitted']))
 								value=""
 								style="width: 255px; padding-left: 36px"
 								placeholder="Passwort"
-						        autocomplete="on" 
-						        autocapitalize="off" 
-						        autocorrect="off" 
-						        required />
+						    autocomplete="on" 
+						    autocapitalize="off" 
+						    autocorrect="off" 
+						    required 
+						  />
 							<label for="newuserpassword" class="infield">Passwort</label>
 							<img class="svg" id="password-icon" src="/core/img/actions/password.svg" alt=""/>
 						</p>
@@ -194,7 +196,7 @@ if(!empty($_POST['submitted']))
 						        //<p class="hint">Das ausgewählte Dokument wurde auf dem Server nich…</p>
 						        //<p class="hint"><a href="/index.php">Du kannst zur Rückkehr zu OwndCloud hier klicken.</a></p>
 
-						        echo "</li></ul>"
+						        echo "</li></ul>";
 						    }    
 						?>
 							
