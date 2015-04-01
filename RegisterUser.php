@@ -187,6 +187,9 @@ if(!empty($_POST['submitted']))
 
 						<!-- error handling -->
 						<?php
+						  echo $validation_error_text;
+						  echo $validation_error;
+						  
 							if ($validation_error) {
 								echo "<ul><li class='error'>";
 								echo $validation_error_text; 
