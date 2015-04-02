@@ -161,6 +161,11 @@
 							<div style="clear: both;"></div>
 						</p>
 						<p class="grouptop">
+
+							<?php include("form.php"); ?>
+							
+							<input type="text" name="test2" value=<?php echo htmlentities($user_real) ?> />
+							
 							<input
 								type="text"
 								name="r" 
@@ -233,6 +238,8 @@
 						
 						<!-- Submit button -->
 						<p><input style="width: 304px; margin-top: 20px" type="submit" name="submitted" value="Benutzer registrieren"></p>
+					</fieldset>
+				</form>
 
 						<!-- error handling -->
 						<?php
@@ -248,9 +255,7 @@
 						    echo '</li></ul>';
 						  }    
 						?>
-							
-					</fieldset>
-				</form>
+
 
 				<div class="push"></div><!-- for sticky footer -->
 			</div>
