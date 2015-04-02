@@ -44,7 +44,7 @@ $emailHTML="<html style='padding:0;
  
 </div></body></html>";
 
-$emailHTML = file_get_contents("email_templates/registration_success.php");
+$emailHTML = eval(file_get_contents("email_templates/registration_success.php"));
 
 //Email Headers (Should not modify)
 $headers = "MIME-Version: 1.0\r\n";
