@@ -45,7 +45,7 @@ $emailHTML="<html style='padding:0;
 </div></body></html>";
 
 $emailHTML = file_get_contents("email_templates/registration_success.php");
-str_replace("?USERNAME?", $user_real, $emailHTML)
+str_replace("?USERNAME?", $user_real, $emailHTML);
 
 //Email Headers (Should not modify)
 $headers = "MIME-Version: 1.0\r\n";
