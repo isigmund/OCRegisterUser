@@ -133,27 +133,17 @@
 				</header>
 							
 				<?php
-				  // include form definition from external file
-					include("form.php"); 
+
 						
 
-					if ($validation_error) {
-						// validation error handling
-						echo '<ul><li class="error">';
-						foreach($validation_error_texts as $error_text)
-							echo $error_text,"<br><br/>";
-					
-				        //<br></br>
-				        //<p class="hint">Das ausgewählte Dokument wurde auf dem Server nich…</p>
-				        //<p class="hint"><a href="/index.php">Du kannst zur Rückkehr zu OwndCloud hier klicken.</a></p>
-				    echo '</li></ul>';
-				  }    
-				  else {
-						// all checks successful continue creating the account
-					  // but only after form has also been submitted
-						if(!empty($_POST['submitted'])) { 
+					if (!$validation_error) {
 
-							// create user account
+						if(empty($_POST['submitted'])) {
+							// form not yet submitted  --> show form
+							include("form.php"); 
+						}
+						else { 
+							// form was submitted and no validation error --> create user account
 							$sql = "INSERT INTO `$dbname`.`".$prefix."users` (`uid`, `displayname`, `password`) VALUES ('$user_id', '$user_real', '$user_hash');"; //Create Usable Account
 							mysqli_query($conn, $sql);
 							$sql = "INSERT INTO `$dbname`.`".$prefix."preferences` (`userid`, `appid`, `configkey`, `configvalue`) VALUES ('$user_id', 'settings', 'email', '$user_email');"; //Associate Email with Acccount
@@ -169,9 +159,26 @@
 							mail("$yourEmail","New User", "<h2>A new user has registered</h2><ul><li>Name: $user_real</li><li>Email: $user_email</li><li>Username: $user_id</li></ul><a href='$pathToTerminate?user=$user_id'>Terminate User?</a>",$headers);
 							mail("$user_email", "Welcome to our Cloud" ,"$emailHTML",$headers);
 							
-							//Emails sent, process complete.		
+							//Emails sent, process complete.	
+							echo "sucess";	
 						}						
 				  }
+				  else {
+				  	// an validation error occured
+
+						// show form again
+						include("form.php"); 
+
+						// show error info
+						echo '<ul><li class="error">';
+						foreach($validation_error_texts as $error_text)
+							echo $error_text,"<br><br/>";
+					
+				        //<br></br>
+				        //<p class="hint">Das ausgewählte Dokument wurde auf dem Server nich…</p>
+				        //<p class="hint"><a href="/index.php">Du kannst zur Rückkehr zu OwndCloud hier klicken.</a></p>
+				    echo '</li></ul>';
+				  }    
 				?>
 
 				<div class="push"></div><!-- for sticky footer -->
