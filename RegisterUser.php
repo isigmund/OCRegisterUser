@@ -65,26 +65,7 @@
 		} 
 
 
-		// all checks successful continue creating the account
-		if (!$validation_error){
-			// create user account
-			$sql = "INSERT INTO `$dbname`.`".$prefix."users` (`uid`, `displayname`, `password`) VALUES ('$user_id', '$user_real', '$user_hash');"; //Create Usable Account
-			mysqli_query($conn, $sql);
-			$sql = "INSERT INTO `$dbname`.`".$prefix."preferences` (`userid`, `appid`, `configkey`, `configvalue`) VALUES ('$user_id', 'settings', 'email', '$user_email');"; //Associate Email with Acccount
-			mysqli_query($conn, $sql);
 
-			//Delete the next 2 lines if you want the account to be instantly activated.
-			$sql = "INSERT INTO `$dbname`.`".$prefix."preferences` (`userid`, `appid`, `configkey`, `configvalue`) VALUES ('$user_id', 'files', 'quota', '0 B');"; //Set quota to 0 B in order to disable account
-			mysqli_query($conn, $sql);
-
-			//Account registered
-			//Dispatch 2 email, 1 to activate user's account to the registree's account and another to the admin's with some of their data and the option to terminate the account.
-			//The following may need a LOT of modifying.
-			mail("$yourEmail","New User", "<h2>A new user has registered</h2><ul><li>Name: $user_real</li><li>Email: $user_email</li><li>Username: $user_id</li></ul><a href='$pathToTerminate?user=$user_id'>Terminate User?</a>",$headers);
-			mail("$user_email", "Welcome to our Cloud" ,"$emailHTML",$headers);
-			
-			//Emails sent, process complete.
-		}
 	}
 ?>
 
@@ -150,111 +131,46 @@
 						<div id="logo-claim" style="display:none;"></div>
 					</div>
 				</header>
-								
-				<!--[if IE 8]><style>input[type="checkbox"]{padding:0;}</style><![endif]-->
-				<form method="post" action="?" name="login">
-					<fieldset>
-						<p id="message" class="hidden">
-							<img class="float-spinner" alt="" src="/core/img/loading-dark.gif" />
-							<span id="messageText"></span>
-							<!-- the following div ensures that the spinner is always inside the #message div -->
-							<div style="clear: both;"></div>
-						</p>
-						<p class="grouptop">
+							
+				<?php
+				  // include form definitial from external file
+					include("form.php"); 
+						
+		// all checks successful continue creating the account
+		if (!$validation_error){
+			// create user account
+			$sql = "INSERT INTO `$dbname`.`".$prefix."users` (`uid`, `displayname`, `password`) VALUES ('$user_id', '$user_real', '$user_hash');"; //Create Usable Account
+			mysqli_query($conn, $sql);
+			$sql = "INSERT INTO `$dbname`.`".$prefix."preferences` (`userid`, `appid`, `configkey`, `configvalue`) VALUES ('$user_id', 'settings', 'email', '$user_email');"; //Associate Email with Acccount
+			mysqli_query($conn, $sql);
 
-							<?php include("form.php"); ?>
-							
-							<input type="text" name="test2" value=<?php echo htmlentities($user_real) ?> />
-							
-							<input
-								type="text"
-								name="r" 
-								id="newuserfullname"
-							    style="width: 255px; padding-left: 36px"
-								placeholder="Vor- und Nachname"
-								value="<?php echo htmlentities($user_real) ?>"
-								autofocus
-								autocomplete="on" 
-								autocapitalize="off" 
-								autocorrect="off" 
-								required 
-							/>
-							<label for="newuserfullname" class="infield">Vor- und Nachname</label>
-						</p>
+			//Delete the next 2 lines if you want the account to be instantly activated.
+			$sql = "INSERT INTO `$dbname`.`".$prefix."preferences` (`userid`, `appid`, `configkey`, `configvalue`) VALUES ('$user_id', 'files', 'quota', '0 B');"; //Set quota to 0 B in order to disable account
+			mysqli_query($conn, $sql);
+
+			//Account registered
+			//Dispatch 2 email, 1 to activate user's account to the registree's account and another to the admin's with some of their data and the option to terminate the account.
+			//The following may need a LOT of modifying.
+			mail("$yourEmail","New User", "<h2>A new user has registered</h2><ul><li>Name: $user_real</li><li>Email: $user_email</li><li>Username: $user_id</li></ul><a href='$pathToTerminate?user=$user_id'>Terminate User?</a>",$headers);
+			mail("$user_email", "Welcome to our Cloud" ,"$emailHTML",$headers);
+			
+			//Emails sent, process complete.
+		}
+
+				//<!-- error handling -->
+
+					if ($validation_error) {
+						echo '<ul><li class="error">';
+						foreach($validation_error_texts as $error_text)
+							echo $error_text,"<br><br/>";
 					
-						<p class="groupbottom">
-							<input 
-								type="text" 
-								name="e" 
-								id="newuseremail" 
-								value="<?php echo htmlentities($user_email) ?>"
-								style="width: 255px; padding-left: 36px"
-								placeholder="eMail"
-						    autocomplete="on" 
-						    autocapitalize="off" 
-						    autocorrect="off" 
-						    required 
-						   />
-							<label for="newuseremail" class="infield">eMail</label>
-						</p>
-						
-						
-						<p class="grouptop">
-							<input 
-								type="text" 
-								name="u" 
-								id="newusername" 
-								value="<?php echo htmlentities($user_id) ?>"
-								style="width: 255px; padding-left: 36px"
-								placeholder="Benutzername"
-						    autocomplete="on" 
-						    autocapitalize="off" 
-						    autocorrect="off" 
-						    required 
-						  />
-							<label for="newusername" class="infield">Benutzername</label>
-							<img class="svg" style="top: 22px;" id="password-icon" src="/core/img/actions/user.svg" alt=""/> 
-						</p>
-						
-						<p class="groupbottom">
-							<input 
-								type="password" 
-								name="p" 
-								id="newuserpassword" 
-								value=""
-								style="width: 255px; padding-left: 36px"
-								placeholder="Passwort"
-						    autocomplete="on" 
-						    autocapitalize="off" 
-						    autocorrect="off" 
-						    required 
-						  />
-							<label for="newuserpassword" class="infield">Passwort</label>
-							<img class="svg" id="password-icon" src="/core/img/actions/password.svg" alt=""/>
-						</p>
-						
-						<!-- reCAPTCHA widget -->
-						<div class="g-recaptcha" data-sitekey="6Ld6ogQTAAAAADzkW1e_w-ymWcoPnn_PF1mzYGSi"></div>
-						
-						<!-- Submit button -->
-						<p><input style="width: 304px; margin-top: 20px" type="submit" name="submitted" value="Benutzer registrieren"></p>
-					</fieldset>
-				</form>
-
-						<!-- error handling -->
-						<?php
-							if ($validation_error) {
-								echo '<ul><li class="error">';
-								foreach($validation_error_texts as $error_text)
-  								echo $error_text,"<br/>";
-								//echo $validation_error_text; 
-							
-						        //<br></br>
-						        //<p class="hint">Das ausgewählte Dokument wurde auf dem Server nich…</p>
-						        //<p class="hint"><a href="/index.php">Du kannst zur Rückkehr zu OwndCloud hier klicken.</a></p>
-						    echo '</li></ul>';
-						  }    
-						?>
+				        //<br></br>
+				        //<p class="hint">Das ausgewählte Dokument wurde auf dem Server nich…</p>
+				        //<p class="hint"><a href="/index.php">Du kannst zur Rückkehr zu OwndCloud hier klicken.</a></p>
+				    echo '</li></ul>';
+				  }    
+				  
+				?>
 
 
 				<div class="push"></div><!-- for sticky footer -->
