@@ -152,7 +152,7 @@
 						// all checks successful continue creating the account
 					  // but only after form has also been submitted
 						if(!empty($_POST['submitted'])) { 
-							
+
 							// create user account
 							$sql = "INSERT INTO `$dbname`.`".$prefix."users` (`uid`, `displayname`, `password`) VALUES ('$user_id', '$user_real', '$user_hash');"; //Create Usable Account
 							mysqli_query($conn, $sql);
@@ -164,12 +164,13 @@
 							mysqli_query($conn, $sql);
 
 							//Account registered
-							//Dispatch 2 email, 1 to activate user's account to the registree's account and another to the admin's with some of their data and the option to terminate the account.
+							//Dispatch 2 emails, 1 to activate user's account to the registree's account and another to the admin's with some of their data and the option to terminate the account.
 							//The following may need a LOT of modifying.
 							mail("$yourEmail","New User", "<h2>A new user has registered</h2><ul><li>Name: $user_real</li><li>Email: $user_email</li><li>Username: $user_id</li></ul><a href='$pathToTerminate?user=$user_id'>Terminate User?</a>",$headers);
 							mail("$user_email", "Welcome to our Cloud" ,"$emailHTML",$headers);
 							
-							//Emails sent, process complete.								
+							//Emails sent, process complete.		
+						}						
 				  }
 				?>
 
