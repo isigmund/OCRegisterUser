@@ -185,9 +185,10 @@
 							//Emails sent, process complete.	
 							echo "</br></br><h1 class='header-appname'>Konto wurde erfolgreich angelegt !</h1>";	
 							echo "</br></br><h2 class='header-appname'>Eine eMail mit informationen zur Aktivierung des Kontos wurde an Ihre eMail-Adresse versendet.</h2>";	
-							echo "</br><a href='".$websiteUrl."'>Zurück zum Anmeldebildschirm... </a>";
+							echo "</br></br><a style='color: #ccc;   font-weight: bold;' href='".$websiteUrl."'>Zurück zum Anmeldebildschirm... </a>";
 						}			
-	
+
+
 				  }
 				  else {
 				  	// an validation error occured
