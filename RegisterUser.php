@@ -9,6 +9,9 @@
 	$user_pass = "";
 	$reCAPTCHAResponse = "";
 
+  // config settings
+  require "config.php"; 
+
 	if(!empty($_POST['submitted']))
 	{// if submitted do validations
 
@@ -32,9 +35,6 @@
 			$validation_error = TRUE;
 			array_push($validation_error_texts, 'Keine gültige eMail-Adresse eingegeben !');	
 		}
-
-
-		require "config.php"; 
 
 		// check valid reCAPTCHA response
 		$reCAPTCHAResponse = $_POST['g-recaptcha-response'];
