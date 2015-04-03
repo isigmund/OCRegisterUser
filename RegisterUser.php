@@ -180,9 +180,9 @@
 							$registrationEmailHTML = str_replace("?USERNAME?", $user_real, $registrationEmailHTML);
 							$registrationEmailHTML = str_replace("?WEBSITEURL?", $websiteUrl, $registrationEmailHTML);
 							$registrationEmailHTML = str_replace("?ACTIVATIONURL?", $pathToActivate . "?key=" . md5($user_id . $user_id) . "&amp;user=" . $user_id, $registrationEmailHTML);
-							mail("$user_email", "Welcome to our Cloud" ,$registrationEmailHTML, $headers);
+							mail("$user_email", "Willkommen in der Cloud des Waldorfkindergartens Deggenhausertal" ,$registrationEmailHTML, $headers);
 							
-							
+
 							//Emails sent, process complete.	
 							echo "</br></br><h1 class='header-appname'>Konto wurde erfolgreich angelegt !</h1>";	
 							echo "</br></br><h2 class='header-appname'>Eine eMail mit informationen zur Aktivierung des Kontos wurde an Ihre eMail-Adresse versendet.</h2>";	
