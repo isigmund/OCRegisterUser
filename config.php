@@ -44,6 +44,7 @@ $emailHTML="<html style='padding:0;
  
 </div></body></html>";
 
+
 $emailHTML = file_get_contents("email_templates/registration_success.html");
 $emailHTML = str_replace("?USERNAME?", $user_real, $emailHTML);
 $emailHTML = str_replace("?WEBSITEURL?", $websiteUrl, $emailHTML);
@@ -51,8 +52,6 @@ $emailHTML = str_replace("?ACTIVATIONURL?", '$pathToActivate?key=". md5($user_id
 
 //href='$pathToActivate?key=". md5($user_id . $user_id) ."&amp;user=$user_id'
 
-
-$websiteUrl
 
 //Email Headers (Should not modify)
 $headers = "MIME-Version: 1.0\r\n";
