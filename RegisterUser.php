@@ -182,9 +182,9 @@
 				  	// an validation error occured
 
 echo $reCAPTCHAResponse;
-echo "</br>"
+echo "</br>";
 echo $reCAPTCHAValidationURL;
-echo "</br>"
+echo "</br>";
 echo $reCAPTCHAVerifyResponse;
 
 						// show form again
