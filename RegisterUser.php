@@ -36,15 +36,23 @@
 			array_push($validation_error_texts, 'Keine gültige eMail-Adresse eingegeben !');	
 		}
 
+
 		// check valid reCAPTCHA response
 		$reCAPTCHAResponse = $_POST['g-recaptcha-response'];
+		if(!$reCAPTCHAResponse){
+			$validation_error = TRUE;
+			array_push($validation_error_texts, 'Bitte bestätigen Sie, dass Sie kein Roboter sind !');	
+        exit;
+     }
+
+    // assemble validation URL, call it and check response
 		$reCAPTCHAValidationURL = "https://www.google.com/recaptcha/api/siteverify?secret=".$recaptchaSecret."&response=".$reCAPTCHAResponse."&remoteip=".$_SERVER['REMOTE_ADDR'];
     $reCAPTCHAVerifyResponse = file_get_contents($reCAPTCHAValidationURL);
-    $reCAPTCHAVerifyResponseSucess = $reCAPTCHAVerifyResponse.success;
     if($reCAPTCHAVerifyResponse.success==false){
 			$validation_error = TRUE;
 			array_push($validation_error_texts, 'reCAPTCHA Prüfung fehlgeschlagen !');	      	
     }
+
 
 		//Hash the user's password
 		$user_hash = password_hash($user_pass, PASSWORD_BCRYPT);
@@ -176,22 +184,12 @@
 							mail("$user_email", "Welcome to our Cloud" ,$emailHTML, $headers);
 							
 							//Emails sent, process complete.	
-							echo "sucess";	
+							echo "</br>/br><h1>Konto wurde erfolgreich angelegt !</h1>";	
+							echo "</br>/br><h2>Eine eMail mit informationen zur Aktivierung des Kontos wurde an Ihre eMail-Adresse versendet.</h2>";	
 						}						
 				  }
 				  else {
 				  	// an validation error occured
-
-echo $reCAPTCHAResponse;
-echo "</br>";
-echo "</br>";
-echo $reCAPTCHAValidationURL;
-echo "</br>";
-echo "</br>";
-echo $reCAPTCHAVerifyResponse;
-echo "</br>";
-echo "</br>";
-echo $reCAPTCHAVerifyResponseSucess;
 
 						// show form again
 						include("lib/form.php"); 
