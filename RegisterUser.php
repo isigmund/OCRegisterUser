@@ -42,7 +42,6 @@
 		if(!$reCAPTCHAResponse){
 			$validation_error = TRUE;
 			array_push($validation_error_texts, 'Bitte bestätigen Sie, dass Sie kein Roboter sind !');	
-        exit;
      }
 
     // assemble validation URL, call it and check response
