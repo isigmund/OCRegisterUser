@@ -34,9 +34,11 @@
 		}
 
 
+		require "config.php"; 
+
 		// check valid reCAPTCHA response
 		$reCAPTCHAResponse = $_POST['g-recaptcha-response'];
-    $reCAPTCHAVerifyResponse=file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=".$recaptchaSiteKey."&response=".$reCAPTCHAResponse."&remoteip=".$_SERVER['REMOTE_ADDR']);
+    $reCAPTCHAVerifyResponse=file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=".$recaptchaSecret."&response=".$reCAPTCHAResponse."&remoteip=".$_SERVER['REMOTE_ADDR']);
     if(!$reCAPTCHAVerifyResponse.success){
 			$validation_error = TRUE;
 			array_push($validation_error_texts, 'reCAPTCHA Prüfung fehlgeschlagen !');	      	
@@ -47,8 +49,8 @@
 		//require "pswd.php";
 		$user_hash = password_hash($user_pass, PASSWORD_BCRYPT);
 
-		//We are now ready to create the account - import config.php
-		require "config.php";    //Set database credentials in config.php
+		//We are now ready to create the account -
+
 
 		
 		//Establish connection with your mySQL server

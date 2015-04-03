@@ -75,7 +75,7 @@
 			<label for="newuserpassword" class="infield">Passwort</label>
 			<img class="svg" id="password-icon" src="/core/img/actions/password.svg" alt=""/>
 		</p>
-		6Ld6ogQTAAAAADzkW1e_w-ymWcoPnn_PF1mzYGSi
+<?php echo htmlentities($recaptchaSiteKey); ?> 
 		<!-- reCAPTCHA widget   <php echo htmlentities($recaptchaSiteKey); ?>   -->
 		<div class="g-recaptcha" data-sitekey="6Ld6ogQTAAAAADzkW1e_w-ymWcoPnn_PF1mzYGSi"></div>
 		<!-- Submit button -->
