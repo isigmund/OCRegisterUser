@@ -45,14 +45,8 @@
 			array_push($validation_error_texts, 'reCAPTCHA Prüfung fehlgeschlagen !');	      	
     }
 
-
 		//Hash the user's password
-		//require "pswd.php";
 		$user_hash = password_hash($user_pass, PASSWORD_BCRYPT);
-
-		//We are now ready to create the account -
-
-
 		
 		//Establish connection with your mySQL server
 		$conn = mysqli_connect($servername, $username, $password, $dbname);
@@ -138,14 +132,14 @@
 		<div class="wrapper"><!-- for sticky footer -->
 			<div class="v-align"><!-- vertically centred box -->
 				<header>
-					<div id="header">
+					<div id="header" style="width: auto;">
 						<div class="logo svg">
 							<h1 class="hidden-visually">OwndCloud</h1>
 						</div>
 						<div id="logo-claim" style="display:none;"></div>
 					</div>
 				</header>
-							
+
 				<?php
 					if (!$validation_error) {
 
@@ -187,7 +181,11 @@
 				  else {
 				  	// an validation error occured
 
+echo $reCAPTCHAResponse;
+echo "</br>"
 echo $reCAPTCHAValidationURL;
+echo "</br>"
+echo $reCAPTCHAVerifyResponse;
 
 						// show form again
 						include("lib/form.php"); 
