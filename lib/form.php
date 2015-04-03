@@ -77,7 +77,7 @@
 		</p>
 <?php echo htmlentities($recaptchaSiteKey); ?> 
 		<!-- reCAPTCHA widget   <php echo htmlentities($recaptchaSiteKey); ?>   -->
-		<div class="g-recaptcha" data-sitekey="6Ld6ogQTAAAAADzkW1e_w-ymWcoPnn_PF1mzYGSi"></div>
+		<div class="g-recaptcha" data-sitekey="<?php echo htmlentities($recaptchaSiteKey); ?>"></div>
 		<!-- Submit button -->
 		<p><input style="width: 304px; margin-top: 20px" type="submit" name="submitted" value="Benutzer registrieren"></p>
 	</fieldset>
