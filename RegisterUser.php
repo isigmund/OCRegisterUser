@@ -40,7 +40,8 @@
 		$reCAPTCHAResponse = $_POST['g-recaptcha-response'];
 		$reCAPTCHAValidationURL = "https://www.google.com/recaptcha/api/siteverify?secret=".$recaptchaSecret."&response=".$reCAPTCHAResponse."&remoteip=".$_SERVER['REMOTE_ADDR'];
     $reCAPTCHAVerifyResponse = file_get_contents($reCAPTCHAValidationURL);
-    if(!$reCAPTCHAVerifyResponse.success){
+    $reCAPTCHAVerifyResponseSucess = $reCAPTCHAVerifyResponse.success;
+    if($reCAPTCHAVerifyResponse.success==false){
 			$validation_error = TRUE;
 			array_push($validation_error_texts, 'reCAPTCHA Prüfung fehlgeschlagen !');	      	
     }
@@ -183,9 +184,14 @@
 
 echo $reCAPTCHAResponse;
 echo "</br>";
+echo "</br>";
 echo $reCAPTCHAValidationURL;
 echo "</br>";
+echo "</br>";
 echo $reCAPTCHAVerifyResponse;
+echo "</br>";
+echo "</br>";
+echo $reCAPTCHAVerifyResponseSucess;
 
 						// show form again
 						include("lib/form.php"); 
