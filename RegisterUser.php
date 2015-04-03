@@ -183,9 +183,10 @@
 							mail("$user_email", "Welcome to our Cloud" ,$emailHTML, $headers);
 							
 							//Emails sent, process complete.	
-							echo "</br>/br><h1>Konto wurde erfolgreich angelegt !</h1>";	
-							echo "</br>/br><h2>Eine eMail mit informationen zur Aktivierung des Kontos wurde an Ihre eMail-Adresse versendet.</h2>";	
-						}						
+							echo "</br></br><h1 class="header-appname">Konto wurde erfolgreich angelegt !</h1>";	
+							echo "</br></br><h2 class="header-appname">Eine eMail mit informationen zur Aktivierung des Kontos wurde an Ihre eMail-Adresse versendet.</h2>";	
+						}			
+	
 				  }
 				  else {
 				  	// an validation error occured
