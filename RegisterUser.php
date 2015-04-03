@@ -7,22 +7,25 @@
 	$user_email = "";
 	$user_real = "";
 	$user_pass = "";
+	$reCAPTCHAResponse = "";
 
 	if(!empty($_POST['submitted']))
 	{// if submitted do validations
 
-		require "functions.php";
+		require "lib/functions.php";
 		//Set user's data while escaping to avoid SQL Injection
 		$user_id = mysql_escape_mimic($_POST['u']);
 		$user_email = mysql_escape_mimic($_POST['e']);
 		$user_real = mysql_escape_mimic($_POST['r']);
 		$user_pass = mysql_escape_mimic($_POST['p']);
 
+
 		// check validity of real name
 		if (!preg_match("/^[a-zA-Z ]*$/", $user_real)) {
 			$validation_error = TRUE;
 			array_push($validation_error_texts, 'Kein gültiger Vor- und Nachname eingegeben !');
 		}
+
 
 		// check validity of email
 		if (!filter_var($user_email, FILTER_VALIDATE_EMAIL)) {
@@ -32,6 +35,12 @@
 
 
 		// check valid reCAPTCHA response
+		$reCAPTCHAResponse = $_POST['g-recaptcha-response'];
+    $reCAPTCHAVerifyResponse=file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=".$recaptchaSiteKey."&response=".$reCAPTCHAResponse."&remoteip=".$_SERVER['REMOTE_ADDR']);
+    if(!$reCAPTCHAVerifyResponse.success){
+			$validation_error = TRUE;
+			array_push($validation_error_texts, 'reCAPTCHA Prüfung fehlgeschlagen !');	      	
+    }
 
 
 		//Hash the user's password
@@ -49,6 +58,7 @@
 			array_push($validation_error_texts, 'Datenbankverbindung fehlgeschlagen !');
 		}
 
+
 		//Check for duplicates for records that must be unique. If found, abord.
 		//Check username
 		$numrows = mysqli_num_rows(mysqli_query($conn, "SELECT uid from ".$prefix."users WHERE uid = '$user_id'"));				
@@ -56,6 +66,7 @@
 			$validation_error = TRUE;
 			array_push($validation_error_texts, 'Benutzername existiert bereits !');
 		} 
+
 
 		//Check Email
     $numrows = mysqli_num_rows(mysqli_query($conn, "SELECT configvalue from ".$prefix."preferences WHERE configvalue = '$user_email'"));
@@ -133,14 +144,11 @@
 				</header>
 							
 				<?php
-
-						
-
 					if (!$validation_error) {
 
 						if(empty($_POST['submitted'])) {
 							// form not yet submitted  --> show form
-							include("form.php"); 
+							include("lib/form.php"); 
 						}
 						else { 
 							// form was submitted and no validation error --> create user account
@@ -156,8 +164,18 @@
 							//Account registered
 							//Dispatch 2 emails, 1 to activate user's account to the registree's account and another to the admin's with some of their data and the option to terminate the account.
 							//The following may need a LOT of modifying.
-							mail("$yourEmail","New User", "<h2>A new user has registered</h2><ul><li>Name: $user_real</li><li>Email: $user_email</li><li>Username: $user_id</li></ul><a href='$pathToTerminate?user=$user_id'>Terminate User?</a>",$headers);
-							mail("$user_email", "Welcome to our Cloud" ,"$emailHTML",$headers);
+							$registrationEmailHTML = file_get_contents($registrationEmailTemplate);
+							$registrationEmailHTML = str_replace("?USERNAME?", $user_real, $registrationEmailHTML);
+							$registrationEmailHTML = str_replace("?WEBSITEURL?", $websiteUrl, $registrationEmailHTML);
+							$registrationEmailHTML = str_replace("?ACTIVATIONURL?", $pathToActivate . "?key=" . md5($user_id . $user_id) . "&amp;user=" . $user_id, $registrationEmailHTML);
+							mail("$yourEmail", "New User", $registrationInfoEmailHTML, $headers);
+
+							$registrationInfoEmailHTML = file_get_contents($registrationInfoEmailTemplate);
+							$registrationInfoEmailHTML = str_replace("?USERNAME?", $user_real, $registrationInfoEmailHTML);
+							$registrationInfoEmailHTML = str_replace("?USERID?", $user_id, $registrationInfoEmailHTML);
+							$registrationInfoEmailHTML = str_replace("?USEREMAIL?", $user_email, $registrationInfoEmailHTML);
+							$registrationInfoEmailHTML = str_replace("?TERMINATIONURL?", $pathToTerminate . "?user=" . $user_id, $registrationInfoEmailHTML);
+							mail("$user_email", "Welcome to our Cloud" ,$emailHTML, $headers);
 							
 							//Emails sent, process complete.	
 							echo "sucess";	
@@ -167,17 +185,17 @@
 				  	// an validation error occured
 
 						// show form again
-						include("form.php"); 
+						include("lib/form.php"); 
 
 						// show error info
-						echo '<ul><li class="error">';
+						echo '<div><ul><li class="error">';
 						foreach($validation_error_texts as $error_text)
 							echo $error_text,"<br><br/>";
 					
 				        //<br></br>
 				        //<p class="hint">Das ausgewählte Dokument wurde auf dem Server nich…</p>
 				        //<p class="hint"><a href="/index.php">Du kannst zur Rückkehr zu OwndCloud hier klicken.</a></p>
-				    echo '</li></ul>';
+				    echo '</li></ul></div>';
 				  }    
 				?>
 
