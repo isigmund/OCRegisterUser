@@ -169,18 +169,19 @@
 							//Account registered
 							//Dispatch 2 emails, 1 to activate user's account to the registree's account and another to the admin's with some of their data and the option to terminate the account.
 							//The following may need a LOT of modifying.
-							$registrationEmailHTML = file_get_contents($registrationEmailTemplate);
-							$registrationEmailHTML = str_replace("?USERNAME?", $user_real, $registrationEmailHTML);
-							$registrationEmailHTML = str_replace("?WEBSITEURL?", $websiteUrl, $registrationEmailHTML);
-							$registrationEmailHTML = str_replace("?ACTIVATIONURL?", $pathToActivate . "?key=" . md5($user_id . $user_id) . "&amp;user=" . $user_id, $registrationEmailHTML);
-							mail("$yourEmail", "New User", $registrationInfoEmailHTML, $headers);
-
 							$registrationInfoEmailHTML = file_get_contents($registrationInfoEmailTemplate);
 							$registrationInfoEmailHTML = str_replace("?USERNAME?", $user_real, $registrationInfoEmailHTML);
 							$registrationInfoEmailHTML = str_replace("?USERID?", $user_id, $registrationInfoEmailHTML);
 							$registrationInfoEmailHTML = str_replace("?USEREMAIL?", $user_email, $registrationInfoEmailHTML);
 							$registrationInfoEmailHTML = str_replace("?TERMINATIONURL?", $pathToTerminate . "?user=" . $user_id, $registrationInfoEmailHTML);
-							mail("$user_email", "Welcome to our Cloud" ,$emailHTML, $headers);
+							mail("$yourEmail", "New User", $registrationInfoEmailHTML, $headers);
+
+							$registrationEmailHTML = file_get_contents($registrationEmailTemplate);
+							$registrationEmailHTML = str_replace("?USERNAME?", $user_real, $registrationEmailHTML);
+							$registrationEmailHTML = str_replace("?WEBSITEURL?", $websiteUrl, $registrationEmailHTML);
+							$registrationEmailHTML = str_replace("?ACTIVATIONURL?", $pathToActivate . "?key=" . md5($user_id . $user_id) . "&amp;user=" . $user_id, $registrationEmailHTML);
+							mail("$user_email", "Welcome to our Cloud" ,$registrationEmailHTML, $headers);
+							
 							
 							//Emails sent, process complete.	
 							echo "</br></br><h1 class='header-appname'>Konto wurde erfolgreich angelegt !</h1>";	
