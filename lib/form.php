@@ -75,8 +75,8 @@
 			<label for="newuserpassword" class="infield">Passwort</label>
 			<img class="svg" id="password-icon" src="/core/img/actions/password.svg" alt=""/>
 		</p>
-<?php echo htmlentities($recaptchaSiteKey); ?> 
-		<!-- reCAPTCHA widget   <php echo htmlentities($recaptchaSiteKey); ?>   -->
+
+		<!-- reCAPTCHA widget  --> 
 		<div class="g-recaptcha" data-sitekey="<?php echo htmlentities($recaptchaSiteKey); ?>"></div>
 		<!-- Submit button -->
 		<p><input style="width: 304px; margin-top: 20px" type="submit" name="submitted" value="Benutzer registrieren"></p>
