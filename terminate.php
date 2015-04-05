@@ -2,7 +2,7 @@
 
 <form method="POST">
 	<input type="text" name="user" placeholder="User" value="<? echo $_GET['user'] ?>"/>
-	<input type="text" name="auth" placeholder="Auth"/>
+	<input type="password" name="auth" placeholder="Auth"/>
 	<input type="submit" />
 </form>
 
