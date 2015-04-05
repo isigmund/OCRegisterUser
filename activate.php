@@ -81,7 +81,6 @@
 							$sql = "REPLACE `$dbname`.`".$prefix."preferences` (`userid`, `appid`, `configkey`, `configvalue`) VALUES ('$user', 'files', 'quota', '$quota');";
 
 							if (mysqli_query($conn, $sql)) {
-							  echo "Record updated successfully";
 							  echo "</br></br><h1 class='header-appname'>Konto wurde erfolgreich aktiviert !</h1>";
 							  echo "</br></br><a style='color: #ccc;   font-weight: bold;' href='".$websiteUrl."'>cloud.waldorfkindergarten-deggenhausertal.de</a>";
 							} 
