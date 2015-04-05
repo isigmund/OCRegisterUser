@@ -13,6 +13,8 @@ Mini Icon
 
 remove tagline in theme
 
+check if OpenCloud db connection can be used (no duplication of db credentials)
+
 set group in config.php that is used for newly created users
 
 Activation.php touch up and translate

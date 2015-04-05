@@ -17,7 +17,7 @@
 
 
 		//Removes quota limit
-		$sql = "REPLACE `$dbname`.`".$prefix."preferences` (`userid`, `appid`, `configkey`, `configvalue`) VALUES ('$user', 'files', 'quota', 'none');";
+		$sql = "REPLACE `$dbname`.`".$prefix."preferences` (`userid`, `appid`, `configkey`, `configvalue`) VALUES ('$user', 'files', 'quota', '$quota');";
 
 
 		if (mysqli_query($conn, $sql)) {

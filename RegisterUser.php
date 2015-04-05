@@ -168,7 +168,6 @@
 
 							//Account registered
 							//Dispatch 2 emails, 1 to activate user's account to the registree's account and another to the admin's with some of their data and the option to terminate the account.
-							//The following may need a LOT of modifying.
 							$registrationInfoEmailHTML = file_get_contents($registrationInfoEmailTemplate);
 							$registrationInfoEmailHTML = str_replace("?USERNAME?", $user_real, $registrationInfoEmailHTML);
 							$registrationInfoEmailHTML = str_replace("?USERID?", $user_id, $registrationInfoEmailHTML);
@@ -182,7 +181,6 @@
 							$registrationEmailHTML = str_replace("?ACTIVATIONURL?", $pathToActivate . "?key=" . md5($user_id . $user_id) . "&amp;user=" . $user_id, $registrationEmailHTML);
 							mail("$user_email", "Willkommen in der Cloud des Waldorfkindergartens Deggenhausertal" ,$registrationEmailHTML, $headers);
 							
-
 							//Emails sent, process complete.	
 							echo "</br></br><h1 class='header-appname'>Konto wurde erfolgreich angelegt !</h1>";	
 							echo "</br></br><h2 class='header-appname'>Eine eMail mit informationen zur Aktivierung des Kontos wurde an Ihre eMail-Adresse versendet.</h2>";	

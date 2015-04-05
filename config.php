@@ -1,6 +1,7 @@
 <?
 //User
 $quota = "1 GB";
+$initalGroup = "Eltern";
 //Configuration file
 //General
 $websiteUrl = "https://cloud.waldorfkindergarten-deggenhausertal.de";
