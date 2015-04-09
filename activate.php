@@ -81,9 +81,20 @@
 							$sql = "REPLACE `$dbname`.`".$prefix."preferences` (`userid`, `appid`, `configkey`, `configvalue`) VALUES ('$user', 'files', 'quota', '$quota');";
 							mail("$yourEmail", "Cloud Activation", "Error Updating record. Effected user user :".$user."\r\nError updating record: " . mysqli_error($conn), $headers);
 
+							// get email associated to activated account
+							$sql = "SELECT `configvalue` from `$dbname`.`".$prefix."preferences` WHERE `userid`='$user' AND `appid`='settings' AND `configkey` ='email';";
+							$select_result = mysqli_query($conn, $sql);
+							$row = mysqli_fetch_assoc($select_result);
+							$email =$row['configvalue']
+					
+
 							if (mysqli_query($conn, $sql)) {
 							  echo "</br></br><h1 class='header-appname'>Konto wurde erfolgreich aktiviert !</h1>";
 							  echo "</br></br><a style='color: #ccc;  font-weight: bold;' href='".$websiteUrl."'>cloud.waldorfkindergarten-deggenhausertal.de</a>";
+							  echo $email;
+							  $activationInfoEmailHTML = file_get_contents($activationInfoEmailTemplate);
+								$activationInfoEmailHTML = str_replace("?USERID?", $user, $activationInfoEmailHTML);
+							  // mail("$email", "could.waldorfkindergarten.deggenhausertal Konto aktiviert" ,$activationEmailHTML, $headers);)
 							} 
 							else {
 								mail("$yourEmail", "Cloud Activation Failed", "Error Updating record. Effected user user :".$user."\r\nError updating record: " . mysqli_error($conn), $headers);

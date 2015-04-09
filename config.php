@@ -44,6 +44,12 @@ $registrationEmailTemplate = "email_templates/registration_success.html";
 $registrationInfoEmailTemplate = "email_templates/registration_info.html";
 
 
+// activation email
+// sent to registree upon sucessful activation
+//  possible placeholders :     
+//  ?USERID?         
+$activationEmailTemplate = "email_templates/activation_success.html";
+
 
 //Email Headers (Should not modify)
 $headers = "MIME-Version: 1.0\r\n";
