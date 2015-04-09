@@ -41,6 +41,7 @@ $registrationEmailTemplate = "email_templates/registration_success.html";
 //  ?USERID?         
 //  ?USEREMAIL?      
 //  ?TERMINATIONURL? 
+//  ?ACTIVATIONURL?
 $registrationInfoEmailTemplate = "email_templates/registration_info.html";
 
 

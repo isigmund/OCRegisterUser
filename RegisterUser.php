@@ -177,6 +177,7 @@
 							$registrationInfoEmailHTML = str_replace("?USERID?", $user_id, $registrationInfoEmailHTML);
 							$registrationInfoEmailHTML = str_replace("?USEREMAIL?", $user_email, $registrationInfoEmailHTML);
 							$registrationInfoEmailHTML = str_replace("?TERMINATIONURL?", $pathToTerminate . "?user=" . $user_id, $registrationInfoEmailHTML);
+							$registrationInfoEmailHTML = str_replace("?ACTIVATIONURL?", $pathToActivate . "?key=". md5($user_id . $user_id) ."&amp;user=$user_id'", $registrationInfoEmailHTML);
 							mail("$yourEmail", "New User", $registrationInfoEmailHTML, $headers);
 
 							$registrationEmailHTML = file_get_contents($registrationEmailTemplate);
