@@ -49,7 +49,7 @@ $registrationInfoEmailTemplate = "email_templates/registration_info.html";
 // sent to registree upon sucessful activation
 //  possible placeholders :     
 //  ?USERID?         
-$activationEmailTemplate = "email_templates/activation_success.html";
+$activationInfoEmailTemplate = "email_templates/activation_success.html";
 
 
 //Email Headers (Should not modify)
