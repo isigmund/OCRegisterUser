@@ -162,6 +162,10 @@
 							$sql = "INSERT INTO `$dbname`.`".$prefix."preferences` (`userid`, `appid`, `configkey`, `configvalue`) VALUES ('$user_id', 'settings', 'email', '$user_email');"; //Associate Email with Acccount
 							mysqli_query($conn, $sql);
 
+							// set initial group for new user as degined in config.php
+							$sql = "INSERT INTO `$dbname`.`".$prefix."group_user` (`gid`, `uid`) VALUES ('$initalGroup', '$user_id');"; //Associate initial group with Acccount
+							mysqli_query($conn, $sql);
+
 							//Delete the next 2 lines if you want the account to be instantly activated.
 							$sql = "INSERT INTO `$dbname`.`".$prefix."preferences` (`userid`, `appid`, `configkey`, `configvalue`) VALUES ('$user_id', 'files', 'quota', '0 B');"; //Set quota to 0 B in order to disable account
 							mysqli_query($conn, $sql);
