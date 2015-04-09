@@ -82,7 +82,7 @@
 							$sql = "SELECT `configvalue` from `$dbname`.`".$prefix."preferences` WHERE `userid`='$user' AND `appid`='settings' AND `configkey` ='email';";
 							$select_result = mysqli_query($conn, $sql);
 							$row = mysqli_fetch_assoc($select_result);
-							$email =$row['configvalue']
+							$email =$row['configvalue'];
 
 							//Removes quota limit
 							$sql = "REPLACE `$dbname`.`".$prefix."preferences` (`userid`, `appid`, `configkey`, `configvalue`) VALUES ('$user', 'files', 'quota', '$quota');";
