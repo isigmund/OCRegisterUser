@@ -86,7 +86,6 @@
 
 							//Removes quota limit
 							$sql = "REPLACE `$dbname`.`".$prefix."preferences` (`userid`, `appid`, `configkey`, `configvalue`) VALUES ('$user', 'files', 'quota', '$quota');";
-							mail("$yourEmail", "Cloud Activation", "Error Updating record. Effected user user :".$user."\r\nError updating record: " . mysqli_error($conn), $headers);
 
 							if (mysqli_query($conn, $sql)) {
 							  echo "</br></br><h1 class='header-appname'>Konto wurde erfolgreich aktiviert !</h1>";

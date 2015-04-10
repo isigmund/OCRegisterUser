@@ -1,6 +1,9 @@
 # OCRegisterUser
 User Registration for OwnCloud Installation
 
+original from http://go.knyz.org/1CA1dBL
+
+
 ##Purpose:
 
 
@@ -9,11 +12,9 @@ User Registration for OwnCloud Installation
 
 ##ToDo:
 
+make registration info page nicere, allow to setgroups there for new user
 
-
-Change activation so manual step by the webadmin is required (switch in config.php)
-		email of new user can be read from oc_preferences table (to generate email for activation)
-		
+	
 
 check if OpenCloud db connection can be used (no duplication of db credentials)
 
