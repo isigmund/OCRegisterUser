@@ -92,7 +92,7 @@
 							  echo "</br></br><a style='color: #ccc;  font-weight: bold;' href='".$websiteUrl."'>cloud.waldorfkindergarten-deggenhausertal.de</a>";
 							  $activationInfoEmailHTML = file_get_contents($activationInfoEmailTemplate);
 								$activationInfoEmailHTML = str_replace("?USERID?", $user, $activationInfoEmailHTML);
-							  mail("$email", "could.waldorfkindergarten.deggenhausertal Konto aktiviert" ,$activationEmailHTML, $headers);
+							  mail("$email", "could.waldorfkindergarten.deggenhausertal Konto aktiviert" ,$activationInfoEmailHTML, $headers);
 							} 
 							else {
 								mail("$yourEmail", "Cloud Activation Failed", "Error Updating record. Effected user user :".$user."\r\nError updating record: " . mysqli_error($conn), $headers);
