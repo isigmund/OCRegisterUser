@@ -1,40 +1,39 @@
 <?php
 
-  // global vars
-	$validation_error = FALSE;
-	$validation_error_texts = array();
-	$user_id = "";
-	$user_email = "";
-	$user_real = "";
-	$user_pass = "";
-	$reCAPTCHAResponse = "";
+// global vars
+$validation_error = FALSE;
+$validation_error_texts = array();
+$user_id = "";
+$user_email = "";
+$user_real = "";
+$user_pass = "";
+$reCAPTCHAResponse = "";
 
-  // config settings
-  require "config.php"; 
+// config settings
+require "config.php"; 
 
-	if(!empty($_POST['submitted']))
-	{// if submitted do validations
+if(!empty($_POST['submitted']))
+{// if submitted do validations
 
-		require "lib/functions.php";
-		//Set user's data while escaping to avoid SQL Injection
-		$user_id = mysql_escape_mimic($_POST['u']);
-		$user_email = mysql_escape_mimic($_POST['e']);
-		$user_real = mysql_escape_mimic($_POST['r']);
-		$user_pass = mysql_escape_mimic($_POST['p']);
-
-
-		// check validity of real name
-		if (!preg_match("/^[a-zA-Z ]*$/", $user_real)) {
-			$validation_error = TRUE;
-			array_push($validation_error_texts, 'Kein gültiger Vor- und Nachname eingegeben !');
-		}
+	require "lib/functions.php";
+	//Set user's data while escaping to avoid SQL Injection
+	$user_id = mysql_escape_mimic($_POST['u']);
+	$user_email = mysql_escape_mimic($_POST['e']);
+	$user_real = mysql_escape_mimic($_POST['r']);
+	$user_pass = mysql_escape_mimic($_POST['p']);
 
 
-		// check validity of email
-		if (!filter_var($user_email, FILTER_VALIDATE_EMAIL)) {
-			$validation_error = TRUE;
-			array_push($validation_error_texts, 'Keine gültige eMail-Adresse eingegeben !');	
-		}
+	// check validity of real name
+	if (!preg_match("/^[a-zA-ZäöüÄÖÜ ]*$/", $user_real)) {
+		$validation_error = TRUE;
+		array_push($validation_error_texts, 'Kein gültiger Vor- und Nachname eingegeben !');
+	}
+
+	// check validity of email
+	if (!filter_var($user_email, FILTER_VALIDATE_EMAIL)) {
+		$validation_error = TRUE;
+		array_push($validation_error_texts, 'Keine gültige eMail-Adresse eingegeben !');	
+	}
 
 
 		// check valid reCAPTCHA response
@@ -45,9 +44,9 @@
      }
 
     // assemble validation URL, call it and check response
-		$reCAPTCHAValidationURL = "https://www.google.com/recaptcha/api/siteverify?secret=".$recaptchaSecret."&response=".$reCAPTCHAResponse."&remoteip=".$_SERVER['REMOTE_ADDR'];
-    $reCAPTCHAVerifyResponse = file_get_contents($reCAPTCHAValidationURL);
-    if($reCAPTCHAVerifyResponse.success==false){
+	$reCAPTCHAValidationURL = "https://www.google.com/recaptcha/api/siteverify?secret=".$recaptchaSecret."&response=".$reCAPTCHAResponse."&remoteip=".$_SERVER['REMOTE_ADDR'];
+    		$reCAPTCHAVerifyResponse = file_get_contents($reCAPTCHAValidationURL);
+    		if($reCAPTCHAVerifyResponse.success==false){
 			$validation_error = TRUE;
 			array_push($validation_error_texts, 'reCAPTCHA Prüfung fehlgeschlagen !');	      	
     }
@@ -74,7 +73,7 @@
 
 
 		//Check Email
-    $numrows = mysqli_num_rows(mysqli_query($conn, "SELECT configvalue from ".$prefix."preferences WHERE configvalue = '$user_email'"));
+		$numrows = mysqli_num_rows(mysqli_query($conn, "SELECT configvalue from ".$prefix."preferences WHERE configvalue = '$user_email'"));
 		if ( $numrows > 0 and !$validation_error ) {
 			$validation_error = TRUE;
 			array_push($validation_error_texts, 'eMail bereits registriert !');
