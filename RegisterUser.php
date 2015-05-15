@@ -24,7 +24,7 @@ if(!empty($_POST['submitted']))
 
 
 	// check validity of real name
-	if (!preg_match("/^[a-zA-ZäöüÄÖÜ ]*$/", $user_real)) {
+	if (!preg_match("/^[a-zA-Z ]*$/", $user_real)) {
 		$validation_error = TRUE;
 		array_push($validation_error_texts, 'Kein gültiger Vor- und Nachname eingegeben !');
 	}
@@ -35,53 +35,50 @@ if(!empty($_POST['submitted']))
 		array_push($validation_error_texts, 'Keine gültige eMail-Adresse eingegeben !');	
 	}
 
-
-		// check valid reCAPTCHA response
-		$reCAPTCHAResponse = $_POST['g-recaptcha-response'];
-		if(!$reCAPTCHAResponse){
-			$validation_error = TRUE;
-			array_push($validation_error_texts, 'Bitte bestätigen Sie, dass Sie kein Roboter sind !');	
-     }
-
-    // assemble validation URL, call it and check response
-	$reCAPTCHAValidationURL = "https://www.google.com/recaptcha/api/siteverify?secret=".$recaptchaSecret."&response=".$reCAPTCHAResponse."&remoteip=".$_SERVER['REMOTE_ADDR'];
-    		$reCAPTCHAVerifyResponse = file_get_contents($reCAPTCHAValidationURL);
-    		if($reCAPTCHAVerifyResponse.success==false){
-			$validation_error = TRUE;
-			array_push($validation_error_texts, 'reCAPTCHA Prüfung fehlgeschlagen !');	      	
-    }
-
-
-		//Hash the user's password
-		$user_hash = password_hash($user_pass, PASSWORD_BCRYPT);
-		
-		//Establish connection with your mySQL server
-		$conn = mysqli_connect($servername, $username, $password, $dbname);
-		if (!$conn and !$validation_error) {
-			$validation_error = TRUE;
-			array_push($validation_error_texts, 'Datenbankverbindung fehlgeschlagen !');
-		}
-
-
-		//Check for duplicates for records that must be unique. If found, abord.
-		//Check username
-		$numrows = mysqli_num_rows(mysqli_query($conn, "SELECT uid from ".$prefix."users WHERE uid = '$user_id'"));				
-		if ( $numrows > 0 and !$validation_error ) {
-			$validation_error = TRUE;
-			array_push($validation_error_texts, 'Benutzername existiert bereits !');
-		} 
-
-
-		//Check Email
-		$numrows = mysqli_num_rows(mysqli_query($conn, "SELECT configvalue from ".$prefix."preferences WHERE configvalue = '$user_email'"));
-		if ( $numrows > 0 and !$validation_error ) {
-			$validation_error = TRUE;
-			array_push($validation_error_texts, 'eMail bereits registriert !');
-		} 
-
-
-
+	// check valid reCAPTCHA response
+	$reCAPTCHAResponse = $_POST['g-recaptcha-response'];
+	if(!$reCAPTCHAResponse){
+		$validation_error = TRUE;
+		array_push($validation_error_texts, 'Bitte bestätigen Sie, dass Sie kein Roboter sind !');	
 	}
+
+	// assemble validation URL, call it and check response
+	$reCAPTCHAValidationURL = "https://www.google.com/recaptcha/api/siteverify?secret=".$recaptchaSecret."&response=".$reCAPTCHAResponse."&remoteip=".$_SERVER['REMOTE_ADDR'];
+    	$reCAPTCHAVerifyResponse = file_get_contents($reCAPTCHAValidationURL);
+    	if($reCAPTCHAVerifyResponse.success==false){
+		$validation_error = TRUE;
+		array_push($validation_error_texts, 'reCAPTCHA Prüfung fehlgeschlagen !');	      	
+    	}
+
+
+	//Hash the user's password
+	$user_hash = password_hash($user_pass, PASSWORD_BCRYPT);
+		
+	//Establish connection with your mySQL server
+	$conn = mysqli_connect($servername, $username, $password, $dbname);
+	if (!$conn and !$validation_error) {
+		$validation_error = TRUE;
+		array_push($validation_error_texts, 'Datenbankverbindung fehlgeschlagen !');
+	}
+
+
+	//Check for duplicates for records that must be unique. If found, abord.
+	//Check username
+	$numrows = mysqli_num_rows(mysqli_query($conn, "SELECT uid from ".$prefix."users WHERE uid = '$user_id'"));				
+	if ( $numrows > 0 and !$validation_error ) {
+		$validation_error = TRUE;
+		array_push($validation_error_texts, 'Benutzername existiert bereits !');
+	} 
+
+
+	//Check Email
+	$numrows = mysqli_num_rows(mysqli_query($conn, "SELECT configvalue from ".$prefix."preferences WHERE configvalue = '$user_email'"));
+	if ( $numrows > 0 and !$validation_error ) {
+		$validation_error = TRUE;
+		array_push($validation_error_texts, 'eMail bereits registriert !');
+	} 
+
+}
 ?>
 
 <!DOCTYPE html>
