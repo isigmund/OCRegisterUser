@@ -26,7 +26,19 @@ if(!empty($_POST['submitted']))
 	// check validity of real name
 	if (!preg_match("/^[a-zA-Z ]*$/", $user_real)) {
 		$validation_error = TRUE;
-		array_push($validation_error_texts, 'Kein gültiger Vor- und Nachname eingegeben !');
+		array_push($validation_error_texts, 'Kein gültiger Vor- und Nachname! (Nur Buchstaben (keine Umlaute) und Leerzeichen)');
+	}
+
+	// check validity of user name
+	if (!preg_match("/^[a-zA-Z0-9]*$/", $user_id)) {
+		$validation_error = TRUE;
+		array_push($validation_error_texts, 'Kein gültiger Benutzername! (Nur Buchstaben (keine Umlaute) und Zahlen)');
+	}
+
+	// check validity of password
+	if (!preg_match("/^[a-zA-Z0-9_-]*$/", $user_pass)) {
+		$validation_error = TRUE;
+		array_push($validation_error_texts, 'Kein gültiges Passwort! (Nur Buchstaben (keine Umlaute), Zahlen und -_)');
 	}
 
 	// check validity of email
